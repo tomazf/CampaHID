@@ -1,0 +1,34 @@
+    OVERLAY FS v raspi-config
+	pred tem pa apt update
+	
+    1  sudo raspi-config
+    2  sudo apt-get install socat
+    3  vcgencmd measure_temp
+    4  sudo reboot
+    5  dmesg | grep tty
+    6  socat /dev/ttyACM0,raw,echo=0,crnl /dev/ttyS0,raw,echo=0
+       socat /dev/ttyACM0,raw,echo=0,crnl /dev/serial0,raw,echo=0	-> serial0 je link na default HW, tudi če je BT disabled
+
+    9  sudo nano /lib/systemd/system/socat.service
+       sudo systemctl daemon-reload
+   10  sudo systemctl status socat.service
+   11  sudo systemctl start socat.service
+
+   13  sudo systemctl disable hciuart.service
+   14  sudo systemctl disable bluealsa.service
+   15  sudo systemctl disable bluetooth.service
+
+
+IP static:
+nano /etc/dhcpcd.conf
+
+# It is possible to fall back to a static IP if DHCP fails:
+# define static profile
+profile static_eth0
+static ip_address=192.168.10.10/24
+#static routers=192.168.1.1
+#static domain_name_servers=192.168.1.1
+
+# fallback to static profile on eth0
+interface eth0
+fallback static_eth0

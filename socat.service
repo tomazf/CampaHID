@@ -1,0 +1,12 @@
+[Unit]
+Description=RFID service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=socat /dev/ttyACM0,raw,echo=0,crnl /dev/serial0,raw,echo=0
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
