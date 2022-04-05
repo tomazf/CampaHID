@@ -7,6 +7,7 @@
     4  sudo reboot
     5  dmesg | grep tty
     6  socat /dev/ttyACM0,raw,echo=0,crnl /dev/ttyS0,raw,echo=0
+       socat /dev/ttyACM0,raw,echo=0,crnl /dev/ttyAMA0,raw,echo=0	-> rPi zero
        socat /dev/ttyACM0,raw,echo=0,crnl /dev/serial0,raw,echo=0	-> serial0 je link na default HW, tudi če je BT disabled
 
     9  sudo nano /lib/systemd/system/socat.service
